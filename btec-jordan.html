@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTEC الأردن - دليلك الشامل</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --gold: #f5a623;
+    --teal: #0f9b8e;
+    --light-bg: #f8f6f0;
+    --white: #ffffff;
+    --text-dark: #1a1a2e;
+    --text-muted: #6b7280;
+    --card-shadow: 0 4px 24px rgba(26,26,46,0.10);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    background: var(--light-bg);
+    color: var(--text-dark);
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--primary);
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    font-size: 1.4rem; font-weight: 900; color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .nav-links button {
+    background: none; border: none; color: rgba(255,255,255,0.75);
+    font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; padding: 0.4rem 0.7rem; border-radius: 8px;
+    transition: all 0.2s;
+  }
+  .nav-links button:hover, .nav-links button.active {
+    background: rgba(233,69,96,0.2); color: var(--accent);
+  }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #16213e 50%, #0f3460 100%);
+    color: white; text-align: center;
+    padding: 5rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(233,69,96,0.12);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(245,166,35,0.08);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(233,69,96,0.2); border: 1px solid rgba(233,69,96,0.5);
+    color: #fca5a5; font-size: 0.8rem; font-weight: 600;
+    padding: 0.3rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.2; margin-bottom: 1rem; }
+  .hero h1 .highlight { color: var(--accent); }
+  .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white; border: none;
+    padding: 0.85rem 2rem; border-radius: 50px;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-primary:hover { background: #c73652; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+    padding: 0.85rem 2rem; border-radius: 50px;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* STATS */
+  .stats-bar {
+    background: white; padding: 2rem;
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--accent); display: block; }
+  .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+  /* SECTION */
+  .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-size: 2rem; font-weight: 900; color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+  .section-title .accent { color: var(--accent); }
+  .section-subtitle { color: var(--text-muted); font-size: 1rem; margin-bottom: 2.5rem; line-height: 1.7; }
+  .divider { width: 60px; height: 4px; background: var(--accent); border-radius: 4px; margin-bottom: 1rem; }
+
+  /* CARDS */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .card {
+    background: white; border-radius: var(--radius);
+    padding: 1.75rem; box-shadow: var(--card-shadow);
+    transition: all 0.3s; border: 1px solid rgba(0,0,0,0.05);
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(26,26,46,0.15); }
+  .card-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1rem;
+  }
+  .card-icon.red { background: rgba(233,69,96,0.12); }
+  .card-icon.gold { background: rgba(245,166,35,0.12); }
+  .card-icon.teal { background: rgba(15,155,142,0.12); }
+  .card-icon.blue { background: rgba(59,130,246,0.12); }
+  .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* PROS CONS */
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .pros-cons { grid-template-columns: 1fr; } }
+  .pros-box, .cons-box {
+    border-radius: var(--radius); padding: 2rem;
+  }
+  .pros-box { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+  .cons-box { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+  .pros-box h3 { color: #065f46; font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; }
+  .cons-box h3 { color: #7f1d1d; font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; }
+  .point {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    margin-bottom: 0.8rem; font-size: 0.9rem;
+  }
+  .pros-box .point { color: #064e3b; }
+  .cons-box .point { color: #7f1d1d; }
+  .point-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .pros-box .point-dot { background: #059669; }
+  .cons-box .point-dot { background: #dc2626; }
+
+  /* QUIZ */
+  .quiz-container {
+    background: white; border-radius: var(--radius);
+    padding: 2.5rem; box-shadow: var(--card-shadow);
+    max-width: 700px; margin: 0 auto;
+  }
+  .quiz-progress {
+    background: #e5e7eb; border-radius: 50px; height: 8px; margin-bottom: 2rem;
+  }
+  .quiz-progress-bar {
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    height: 100%; border-radius: 50px; transition: width 0.4s ease;
+  }
+  .quiz-q { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--primary); }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.8rem; }
+  .quiz-option {
+    background: var(--light-bg); border: 2px solid transparent;
+    border-radius: 12px; padding: 1rem 1.25rem;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; text-align: right; transition: all 0.2s; color: var(--text-dark);
+  }
+  .quiz-option:hover { border-color: var(--accent); background: rgba(233,69,96,0.05); }
+  .quiz-option.selected { border-color: var(--accent); background: rgba(233,69,96,0.08); color: var(--accent); }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+  .quiz-result {
+    text-align: center; padding: 2rem;
+  }
+  .result-badge {
+    display: inline-block; padding: 1rem 2rem; border-radius: 50px;
+    font-size: 1.3rem; font-weight: 900; margin-bottom: 1rem;
+  }
+  .result-btec { background: linear-gradient(135deg, var(--accent), var(--gold)); color: white; }
+  .result-trad { background: linear-gradient(135deg, var(--teal), #065f46); color: white; }
+  .result-either { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+  .result-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.8; max-width: 500px; margin: 0 auto 1.5rem; }
+
+  /* INTERACTIVE CHOICE */
+  .choice-section {
+    background: linear-gradient(135deg, var(--primary), #16213e);
+    padding: 4rem 2rem; color: white;
+  }
+  .choice-inner { max-width: 900px; margin: 0 auto; }
+  .choice-title { font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .choice-subtitle { opacity: 0.75; margin-bottom: 3rem; }
+  .choice-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 600px) { .choice-cards { grid-template-columns: 1fr; } }
+  .choice-card {
+    background: rgba(255,255,255,0.08); border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.15); padding: 2rem;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .choice-card:hover { background: rgba(255,255,255,0.15); transform: translateY(-4px); }
+  .choice-card .emoji { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+  .choice-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .choice-card p { font-size: 0.85rem; opacity: 0.7; line-height: 1.6; }
+
+  /* STORY */
+  .story-timeline {
+    position: relative; max-width: 700px; margin: 0 auto;
+  }
+  .story-timeline::before {
+    content: '';
+    position: absolute; right: 24px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(180deg, var(--accent), var(--teal));
+  }
+  .story-item {
+    display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 2.5rem;
+    position: relative; flex-direction: row-reverse;
+  }
+  .story-dot {
+    width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0; position: relative; z-index: 2;
+    border: 3px solid white; box-shadow: 0 0 0 3px var(--accent);
+  }
+  .story-dot.blue { background: #dbeafe; box-shadow: 0 0 0 3px #3b82f6; }
+  .story-dot.red { background: #fee2e2; box-shadow: 0 0 0 3px var(--accent); }
+  .story-dot.gold { background: #fef3c7; box-shadow: 0 0 0 3px var(--gold); }
+  .story-dot.green { background: #d1fae5; box-shadow: 0 0 0 3px var(--teal); }
+  .story-content {
+    background: white; border-radius: var(--radius);
+    padding: 1.5rem; flex: 1; box-shadow: var(--card-shadow);
+  }
+  .story-year {
+    font-size: 0.75rem; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem;
+  }
+  .story-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .story-content p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* COMPARISON TABLE */
+  .compare-table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--card-shadow); }
+  .compare-table {
+    width: 100%; border-collapse: collapse; background: white; min-width: 500px;
+  }
+  .compare-table th {
+    background: var(--primary); color: white; padding: 1rem 1.25rem;
+    font-size: 0.95rem; font-weight: 700; text-align: right;
+  }
+  .compare-table th:first-child { border-radius: 0 var(--radius) 0 0; }
+  .compare-table th:last-child { border-radius: var(--radius) 0 0 0; }
+  .compare-table td {
+    padding: 0.9rem 1.25rem; font-size: 0.9rem;
+    border-bottom: 1px solid #f3f4f6; text-align: right;
+  }
+  .compare-table tr:hover td { background: rgba(233,69,96,0.03); }
+  .compare-table .label-col { font-weight: 700; color: var(--primary); }
+  .compare-table .btec-col { color: #065f46; font-weight: 600; }
+  .compare-table .trad-col { color: #1e40af; font-weight: 600; }
+  .check { color: #059669; font-weight: 900; }
+  .cross { color: #dc2626; font-weight: 900; }
+  .neutral { color: #d97706; font-weight: 700; }
+
+  /* SPECIALIZATIONS */
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .spec-card {
+    background: white; border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--card-shadow);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .spec-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(26,26,46,0.15); }
+  .spec-header {
+    padding: 1.5rem; text-align: center;
+  }
+  .spec-emoji { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+  .spec-name { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem; }
+  .spec-body { padding: 0 1.25rem 1.25rem; }
+  .spec-body p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 0.75rem; }
+  .spec-jobs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .job-tag {
+    background: var(--light-bg); border-radius: 50px;
+    padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 600; color: var(--text-dark);
+  }
+
+  /* CAMPAIGN */
+  .campaign-hero {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white; text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden;
+  }
+  .campaign-hero::before {
+    content: 'BTEC';
+    position: absolute; font-size: 15rem; font-weight: 900; opacity: 0.05;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+  .campaign-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 1rem; }
+  .campaign-hero p { font-size: 1.1rem; opacity: 0.85; max-width: 550px; margin: 0 auto; line-height: 1.8; }
+  .campaign-stats {
+    background: white; padding: 3rem 2rem;
+    display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;
+  }
+  .campaign-stat { text-align: center; }
+  .campaign-stat-num { font-size: 2.5rem; font-weight: 900; color: #7c3aed; display: block; }
+  .campaign-stat-label { font-size: 0.9rem; color: var(--text-muted); }
+  .problem-solution { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+  .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+  @media (max-width: 680px) { .ps-grid { grid-template-columns: 1fr; } }
+  .ps-box { border-radius: var(--radius); padding: 2rem; }
+  .ps-box.problem { background: #fef2f2; border: 1px solid #fecaca; }
+  .ps-box.solution { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .ps-box h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 1rem; }
+  .ps-box.problem h3 { color: #991b1b; }
+  .ps-box.solution h3 { color: #14532d; }
+  .ps-item { display: flex; gap: 0.75rem; margin-bottom: 0.9rem; font-size: 0.9rem; align-items: flex-start; }
+  .ps-box.problem .ps-item { color: #7f1d1d; }
+  .ps-box.solution .ps-item { color: #14532d; }
+  .ps-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links button { font-size: 0.72rem; padding: 0.3rem 0.5rem; }
+    .stats-bar { gap: 1.5rem; }
+    .choice-cards { grid-template-columns: 1fr; }
+    .story-timeline::before { right: 20px; }
+  }
+
+  /* SCROLL CTA */
+  .scroll-cta {
+    text-align: center; padding: 3rem 2rem;
+    background: white;
+  }
+  .scroll-cta h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .scroll-cta p { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--primary); color: rgba(255,255,255,0.6);
+    text-align: center; padding: 1.5rem;
+    font-size: 0.85rem;
+  }
+  footer span { color: var(--accent); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">BTEC <span>JO</span></div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home')">الرئيسية</button>
+    <button onclick="showPage('specs')">التخصصات</button>
+    <button onclick="showPage('pros')">المميزات</button>
+    <button onclick="showPage('quiz')">هل يناسبك؟</button>
+    <button onclick="showPage('choice')">اختار مستقبلك</button>
+    <button onclick="showPage('story')">قصة نجاح</button>
+    <button onclick="showPage('compare')">المقارنة</button>
+    <button onclick="showPage('campaign')">ليش BTEC؟</button>
+  </div>
+</nav>
+
+<!-- PAGE 1: HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">🎓 دليل الطالب الأردني</div>
+    <h1>شو هو <span class="highlight">BTEC</span>؟<br>وليش يهمك تعرفه</h1>
+    <p>نظام تعليم عالمي يركز على المهارات العملية والتطبيقية بدل الحفظ والتلقين. اكتشف إذا كان الخيار الصح لك.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('quiz')">هل يناسبني BTEC؟ 🎯</button>
+      <button class="btn-outline" onclick="showPage('specs')">تصفح التخصصات</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">+50</span>
+      <span class="stat-label">تخصص متاح</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">180+</span>
+      <span class="stat-label">دولة تعتمده</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">40+</span>
+      <span class="stat-label">سنة من الخبرة</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">مهارات</span>
+      <span class="stat-label">عملية 100%</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="divider"></div>
+    <h2 class="section-title">ما هو <span class="accent">BTEC</span>؟</h2>
+    <p class="section-subtitle">نظام البكالوريا التقنية والمهنية البريطانية — تأسس في بريطانيا وانتشر عالمياً كبديل فعال للتعليم التقليدي</p>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon red">🎯</div>
+        <h3>تعليم عملي</h3>
+        <p>بدل الامتحانات الحفظية، تتعلم من خلال مشاريع حقيقية ومهام عملية تحاكي بيئة العمل</p>
+      </div>
+      <div class="card">
+        <div class="card-icon gold">🌍</div>
+        <h3>اعتراف دولي</h3>
+        <p>شهادة معترف بها في أوروبا وأمريكا وأستراليا — تفتح لك أبواب الجامعات العالمية</p>
+      </div>
+      <div class="card">
+        <div class="card-icon teal">📊</div>
+        <h3>تقييم مستمر</h3>
+        <p>لا توجد امتحانات نهائية ضاغطة — يُقيَّم أداؤك طوال السنة من خلال المشاريع</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">🚀</div>
+        <h3>سوق العمل</h3>
+        <p>خريجو BTEC يدخلون سوق العمل بمهارات فعلية يبحث عنها أصحاب العمل</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cta">
+    <h2>مستعد تكتشف أكثر؟</h2>
+    <p>استخدم القائمة لاستكشاف كل شيء عن BTEC في الأردن</p>
+    <button class="btn-primary" onclick="showPage('quiz')">ابدأ اختبار "هل يناسبك؟" ←</button>
+  </div>
+</div>
+
+<!-- PAGE 2: SPECIALIZATIONS -->
+<div class="page" id="page-specs">
+  <div style="background: linear-gradient(135deg, #0f9b8e, #065f46); color: white; padding: 3rem 2rem; text-align: center;">
+    <div class="hero-badge" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;">التخصصات المتاحة</div>
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">دليل تخصصات BTEC</h1>
+    <p style="opacity: 0.85; max-width: 500px; margin: 0 auto;">اختار التخصص اللي يناسب شغفك وطموحاتك</p>
+  </div>
+  <div class="section">
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe);">
+          <span class="spec-emoji">💻</span>
+          <div class="spec-name">تقنية المعلومات</div>
+        </div>
+        <div class="spec-body">
+          <p>برمجة، شبكات، أمن معلومات، وتطوير تطبيقات. تتعلم من خلال مشاريع تقنية حقيقية.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">مطور ويب</span>
+            <span class="job-tag">محلل بيانات</span>
+            <span class="job-tag">أمن سيبراني</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #fef3c7, #fde68a);">
+          <span class="spec-emoji">💼</span>
+          <div class="spec-name">إدارة الأعمال</div>
+        </div>
+        <div class="spec-body">
+          <p>ريادة أعمال، تسويق، إدارة موارد بشرية، وتخطيط استراتيجي. مثالي لمن يحلم بأعمال خاصة.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">رائد أعمال</span>
+            <span class="job-tag">مدير مبيعات</span>
+            <span class="job-tag">محلل أعمال</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8);">
+          <span class="spec-emoji">🎨</span>
+          <div class="spec-name">تصميم الجرافيك</div>
+        </div>
+        <div class="spec-body">
+          <p>تصميم بصري، هوية بصرية، إعلانات، وتصميم رقمي. تبني portfolio احترافي من اليوم الأول.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">مصمم جرافيك</span>
+            <span class="job-tag">مدير فني</span>
+            <span class="job-tag">مصمم UI</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+          <span class="spec-emoji">🏥</span>
+          <div class="spec-name">العلوم الصحية</div>
+        </div>
+        <div class="spec-body">
+          <p>رعاية صحية، صيدلة، تمريض، وصحة عامة. تتعلم في بيئات محاكاة حقيقية.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">فني مختبر</span>
+            <span class="job-tag">مساعد طبي</span>
+            <span class="job-tag">صحة عامة</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe);">
+          <span class="spec-emoji">🎬</span>
+          <div class="spec-name">الإعلام والاتصال</div>
+        </div>
+        <div class="spec-body">
+          <p>صحافة، إنتاج إذاعي وتلفزيوني، وسائل التواصل، وعلاقات عامة. صناعة المحتوى بشكل احترافي.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">صحفي</span>
+            <span class="job-tag">منتج محتوى</span>
+            <span class="job-tag">مدير علاقات</span>
+          </div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-header" style="background: linear-gradient(135deg, #ffedd5, #fed7aa);">
+          <span class="spec-emoji">⚙️</span>
+          <div class="spec-name">الهندسة والتكنولوجيا</div>
+        </div>
+        <div class="spec-body">
+          <p>هندسة ميكانيكية، كهرباء، ميكاترونيكس، وتصنيع. ورش عمل وتطبيق عملي مباشر.</p>
+          <div class="spec-jobs">
+            <span class="job-tag">مهندس ميكانيكي</span>
+            <span class="job-tag">فني صيانة</span>
+            <span class="job-tag">مصمم صناعي</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3: PROS & CONS -->
+<div class="page" id="page-pros">
+  <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; padding: 3rem 2rem; text-align: center;">
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">مميزات وعيوب BTEC</h1>
+    <p style="opacity: 0.8; max-width: 500px; margin: 0 auto;">نظرة صادقة وموضوعية على النظام</p>
+  </div>
+  <div class="section">
+    <div class="pros-cons">
+      <div class="pros-box">
+        <h3>✅ المميزات</h3>
+        <div class="point"><div class="point-dot"></div><div>تعلم عملي حقيقي يجهزك لسوق العمل مباشرة</div></div>
+        <div class="point"><div class="point-dot"></div><div>لا ضغط امتحانات نهائية — تقييم مستمر طوال السنة</div></div>
+        <div class="point"><div class="point-dot"></div><div>شهادة معترف بها دولياً في أوروبا وأمريكا</div></div>
+        <div class="point"><div class="point-dot"></div><div>تطوير مهارات القرن الحادي والعشرين: العمل الجماعي والإبداع</div></div>
+        <div class="point"><div class="point-dot"></div><div>مناسب للطلاب الذين يتعلمون بطرق مختلفة</div></div>
+        <div class="point"><div class="point-dot"></div><div>بناء portfolio احترافي أثناء الدراسة</div></div>
+        <div class="point"><div class="point-dot"></div><div>يمكن دخول الجامعات المحلية والدولية</div></div>
+      </div>
+      <div class="cons-box">
+        <h3>⚠️ نقاط يجب معرفتها</h3>
+        <div class="point"><div class="point-dot"></div><div>قد لا يُقبل في بعض الجامعات الأردنية التقليدية</div></div>
+        <div class="point"><div class="point-dot"></div><div>يتطلب التزاماً ومبادرة ذاتية أعلى من التعليم التقليدي</div></div>
+        <div class="point"><div class="point-dot"></div><div>قد يكون أغلى تكلفة في المدارس الخاصة</div></div>
+        <div class="point"><div class="point-dot"></div><div>يحتاج وقتاً للتكيف إذا كنت معتاداً على الحفظ</div></div>
+        <div class="point"><div class="point-dot"></div><div>بعض أصحاب العمل التقليديين قد لا يعرفونه بعد</div></div>
+        <div class="point"><div class="point-dot"></div><div>التخصصات المتاحة في الأردن أقل من بعض الدول</div></div>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--card-shadow);">
+      <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 1rem; color: var(--primary);">💡 الخلاصة</h3>
+      <p style="color: var(--text-muted); line-height: 1.8;">BTEC نظام ممتاز لمن يعرف ماذا يريد ويحب التطبيق العملي. ليس بديلاً سيئاً للتعليم التقليدي — هو خيار مختلف يناسب شخصيات بعينها. الأهم أن تفهم نفسك أولاً.</p>
+      <div style="margin-top: 1rem;">
+        <button class="btn-primary" onclick="showPage('quiz')">اختبر إذا كان يناسبك ←</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: QUIZ -->
+<div class="page" id="page-quiz">
+  <div style="background: linear-gradient(135deg, #f5a623, #e94560); color: white; padding: 3rem 2rem; text-align: center;">
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">هل BTEC يناسبك؟</h1>
+    <p style="opacity: 0.9; max-width: 500px; margin: 0 auto;">اختبر بسيط من 5 أسئلة يحدد الخيار الأنسب لشخصيتك</p>
+  </div>
+  <div class="section">
+    <div class="quiz-container" id="quizBox">
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar" id="progressBar" style="width: 20%"></div>
+      </div>
+      <div id="quizContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 5: INTERACTIVE CHOICE -->
+<div class="page" id="page-choice">
+  <div class="choice-section">
+    <div class="choice-inner">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="hero-badge" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.9);">🔮 اختار مستقبلك</div>
+        <h1 class="choice-title">شو اللي يميزك كطالب؟</h1>
+        <p class="choice-subtitle">اختار اللي يوصف أسلوب تعلمك الأفضل</p>
+      </div>
+      <div class="choice-cards" id="choiceCards">
+        <div class="choice-card" onclick="choiceSelect('practical')">
+          <span class="emoji">🔨</span>
+          <h3>عملي ومحب للتطبيق</h3>
+          <p>تفضل تصنع وتجرب وتطبق بدل ما تحفظ وتكتب في الامتحان</p>
+        </div>
+        <div class="choice-card" onclick="choiceSelect('theoretical')">
+          <span class="emoji">📚</span>
+          <h3>نظري ومحب للقراءة</h3>
+          <p>تستمتع بالمواد النظرية وتحلل المعلومات وتكتب مقالات وأبحاث</p>
+        </div>
+        <div class="choice-card" onclick="choiceSelect('creative')">
+          <span class="emoji">🎨</span>
+          <h3>مبدع وفنان</h3>
+          <p>عندك موهبة إبداعية وتريد مجال يعطيك حرية التعبير والابتكار</p>
+        </div>
+        <div class="choice-card" onclick="choiceSelect('social')">
+          <span class="emoji">🤝</span>
+          <h3>اجتماعي وقائد</h3>
+          <p>تحب العمل مع الناس وتقود الفريق وتبني علاقات وتتواصل</p>
+        </div>
+      </div>
+      <div id="choiceResult" style="display:none; margin-top: 2rem;"></div>
+    </div>
+  </div>
+
+  <div class="section" style="text-align: center;">
+    <div class="divider" style="margin: 0 auto 1rem;"></div>
+    <h2 class="section-title">ليش الاختيار مهم؟</h2>
+    <p class="section-subtitle">اختيار نظام التعليم المناسب يؤثر على مسيرتك كلها. لا يوجد نظام أفضل بالمطلق — الأفضل هو ما يناسب شخصيتك وطموحاتك.</p>
+    <button class="btn-primary" onclick="showPage('compare')">قارن BTEC والتعليم التقليدي ←</button>
+  </div>
+</div>
+
+<!-- PAGE 6: STORY -->
+<div class="page" id="page-story">
+  <div style="background: linear-gradient(135deg, #1a1a2e, #0f3460); color: white; padding: 3.5rem 2rem; text-align: center; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; border-radius: 50%; background: rgba(233,69,96,0.08);"></div>
+    <div class="hero-badge">📖 قصة نجاح حقيقية</div>
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">رحلة أحمد مع BTEC</h1>
+    <p style="opacity: 0.8; max-width: 500px; margin: 0 auto;">من الحيرة إلى النجاح — قصة طالب أردني غيّر مساره</p>
+  </div>
+
+  <div class="section">
+    <div class="story-timeline">
+      <div class="story-item">
+        <div class="story-dot blue">🤔</div>
+        <div class="story-content">
+          <div class="story-year">المرحلة الأولى — الحيرة</div>
+          <h3>ماذا أدرس؟</h3>
+          <p>أحمد، ابن الثامنة عشرة من عمّان، كان يواجه سؤالاً يقض مضجعه: التوجيهي أم البكالوريا الدولية؟ كان يحب التكنولوجيا لكنه يكره الحفظ والامتحانات. أصدقاؤه كلهم ذهبوا للتوجيهي لكنه لم يكن يرى نفسه فيه.</p>
+        </div>
+      </div>
+
+      <div class="story-item">
+        <div class="story-dot red">💡</div>
+        <div class="story-content">
+          <div class="story-year">نقطة التحول</div>
+          <h3>اكتشاف BTEC</h3>
+          <p>في أحد المعارض التعليمية، التقى أحمد بمعلمة شرحت له عن BTEC. "تقييمك عن طريق مشاريع حقيقية — لا امتحانات." توقف كلامه عند هذه الجملة. قرر أن يجرب.</p>
+        </div>
+      </div>
+
+      <div class="story-item">
+        <div class="story-dot gold">📚</div>
+        <div class="story-content">
+          <div class="story-year">السنة الأولى</div>
+          <h3>تحديات البداية</h3>
+          <p>لم يكن الأمر سهلاً في البداية. الحرية الكبيرة في BTEC أربكته — لا أحد يجبرك على شيء. احتاج وقتاً ليتكيف مع نظام التسليمات والمشاريع. لكنه تدريجياً وجد نفسه يستمتع بكل مهمة.</p>
+        </div>
+      </div>
+
+      <div class="story-item">
+        <div class="story-dot green">🚀</div>
+        <div class="story-content">
+          <div class="story-year">السنة الثانية والنتائج</div>
+          <h3>التألق والنجاح</h3>
+          <p>بنى أحمد تطبيقاً لإدارة مواعيد العيادات كمشروع تخرجه. قُبل في جامعة ليدز للدراسة في تقنية المعلومات. اليوم يعمل في شركة ناشئة أردنية كمطور تطبيقات — راتبه ضعف أقرانه الذين سلكوا الطريق التقليدي.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #f5a623, #e94560); border-radius: var(--radius); padding: 2rem; color: white; text-align: center; margin-top: 3rem;">
+      <div style="font-size: 1.5rem; margin-bottom: 0.75rem;">💬</div>
+      <p style="font-size: 1.1rem; font-weight: 600; line-height: 1.7; max-width: 550px; margin: 0 auto 1rem;">"BTEC علمني كيف أتعلم، مش بس ماذا أتعلم. هاي هي الفرق الحقيقي."</p>
+      <p style="opacity: 0.85; font-size: 0.9rem;">— أحمد، خريج BTEC تقنية معلومات، عمّان 2023</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 7: COMPARISON -->
+<div class="page" id="page-compare">
+  <div style="background: linear-gradient(135deg, #1e40af, #1d4ed8); color: white; padding: 3rem 2rem; text-align: center;">
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 0.75rem;">BTEC مقابل التعليم التقليدي</h1>
+    <p style="opacity: 0.8; max-width: 500px; margin: 0 auto;">مقارنة شاملة تساعدك تتخذ القرار الصح</p>
+  </div>
+  <div class="section">
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">المعيار</th>
+            <th style="color: #fca5a5;">🎯 BTEC</th>
+            <th style="color: #93c5fd;">📚 تعليم تقليدي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-col">أسلوب التعلم</td>
+            <td class="btec-col">مشاريع عملية وتطبيق</td>
+            <td class="trad-col">محاضرات وحفظ</td>
+          </tr>
+          <tr>
+            <td class="label-col">نظام التقييم</td>
+            <td class="btec-col">تقييم مستمر على مدار السنة</td>
+            <td class="trad-col">امتحانات نهائية</td>
+          </tr>
+          <tr>
+            <td class="label-col">القبول الجامعي</td>
+            <td class="btec-col"><span class="check">✓</span> دولياً وبعض الجامعات الأردنية</td>
+            <td class="trad-col"><span class="check">✓</span> جميع الجامعات الأردنية</td>
+          </tr>
+          <tr>
+            <td class="label-col">سوق العمل المحلي</td>
+            <td class="btec-col"><span class="neutral">~</span> مقبول لكن غير مشهور بعد</td>
+            <td class="trad-col"><span class="check">✓</span> متعارف عليه بشكل كبير</td>
+          </tr>
+          <tr>
+            <td class="label-col">سوق العمل الدولي</td>
+            <td class="btec-col"><span class="check">✓</span> ممتاز في أوروبا وأمريكا</td>
+            <td class="trad-col"><span class="neutral">~</span> يحتاج تعديل للاعتراف</td>
+          </tr>
+          <tr>
+            <td class="label-col">الضغط النفسي</td>
+            <td class="btec-col"><span class="check">✓</span> أقل ضغطاً وتوتراً</td>
+            <td class="trad-col"><span class="cross">✗</span> ضغط عالٍ خاصة الفترات الامتحانية</td>
+          </tr>
+          <tr>
+            <td class="label-col">الاستقلالية والمبادرة</td>
+            <td class="btec-col"><span class="check">✓</span> يتطلب مبادرة عالية</td>
+            <td class="trad-col"><span class="neutral">~</span> هيكل واضح وموجه</td>
+          </tr>
+          <tr>
+            <td class="label-col">المهارات المكتسبة</td>
+            <td class="btec-col">تفكير نقدي، قيادة، حل مشكلات</td>
+            <td class="trad-col">حفظ، كتابة، تحليل أكاديمي</td>
+          </tr>
+          <tr>
+            <td class="label-col">التكلفة</td>
+            <td class="btec-col"><span class="neutral">~</span> متوسطة إلى عالية</td>
+            <td class="trad-col">متاح بكل المستويات</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+      <div style="background: white; border-radius: var(--radius); padding: 1.5rem; border-right: 4px solid var(--accent); box-shadow: var(--card-shadow);">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--accent); margin-bottom: 0.75rem;">اختار BTEC إذا...</h3>
+        <ul style="list-style: none; font-size: 0.9rem; color: var(--text-muted); line-height: 2;">
+          <li>✅ تكره الامتحانات والحفظ</li>
+          <li>✅ تعرف تخصصك المستقبلي</li>
+          <li>✅ تريد العمل أو الدراسة في الخارج</li>
+          <li>✅ أنت شخص مبادر ومستقل</li>
+        </ul>
+      </div>
+      <div style="background: white; border-radius: var(--radius); padding: 1.5rem; border-right: 4px solid #1d4ed8; box-shadow: var(--card-shadow);">
+        <h3 style="font-size: 1.05rem; font-weight: 800; color: #1d4ed8; margin-bottom: 0.75rem;">اختار التقليدي إذا...</h3>
+        <ul style="list-style: none; font-size: 0.9rem; color: var(--text-muted); line-height: 2;">
+          <li>✅ تريد دخول جامعات حكومية أردنية</li>
+          <li>✅ تفضل الهيكل الواضح والتوجيه</li>
+          <li>✅ ما زلت تبحث عن تخصصك</li>
+          <li>✅ ميزانيتك محدودة</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 8: CAMPAIGN -->
+<div class="page" id="page-campaign">
+  <div class="campaign-hero">
+    <div class="hero-badge" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;">📢 حملة توعوية</div>
+    <h1>ليش BTEC مهم في الأردن؟</h1>
+    <p>نظامنا التعليمي يحتاج تجديد — وBTEC قد يكون جزءاً من الحل</p>
+  </div>
+
+  <div class="campaign-stats">
+    <div class="campaign-stat">
+      <span class="campaign-stat-num">70%</span>
+      <span class="campaign-stat-label">من خريجي الجامعات يواجهون صعوبة في الحصول على عمل</span>
+    </div>
+    <div class="campaign-stat">
+      <span class="campaign-stat-num">85%</span>
+      <span class="campaign-stat-label">من أصحاب العمل يريدون مهارات عملية لا شهادات فقط</span>
+    </div>
+    <div class="campaign-stat">
+      <span class="campaign-stat-num">40%</span>
+      <span class="campaign-stat-label">نسبة البطالة بين الشباب في الأردن</span>
+    </div>
+  </div>
+
+  <div class="problem-solution">
+    <div class="divider"></div>
+    <h2 class="section-title">المشكلة <span class="accent">والحل</span></h2>
+    <p class="section-subtitle">نظرة واقعية على واقع التعليم في الأردن وما يمكن أن يقدمه BTEC</p>
+    <div class="ps-grid">
+      <div class="ps-box problem">
+        <h3>❌ مشاكل التعليم التقليدي</h3>
+        <div class="ps-item"><span class="ps-icon">📖</span><span>التركيز على الحفظ والتلقين بدل التفكير النقدي</span></div>
+        <div class="ps-item"><span class="ps-icon">😰</span><span>ضغط هائل على الطالب خاصة في فترة التوجيهي</span></div>
+        <div class="ps-item"><span class="ps-icon">💼</span><span>الخريج يحمل شهادة بدون مهارات سوق العمل</span></div>
+        <div class="ps-item"><span class="ps-icon">🎯</span><span>لا يراعي الفروقات الفردية بين الطلاب</span></div>
+        <div class="ps-item"><span class="ps-icon">🌍</span><span>غير معترف به دولياً بالشكل الكافي</span></div>
+      </div>
+      <div class="ps-box solution">
+        <h3>✅ ما يقدمه BTEC</h3>
+        <div class="ps-item"><span class="ps-icon">🛠️</span><span>تعليم قائم على المشاريع يطور مهارات حقيقية</span></div>
+        <div class="ps-item"><span class="ps-icon">😊</span><span>بيئة تعلم صحية ومتوازنة نفسياً</span></div>
+        <div class="ps-item"><span class="ps-icon">📊</span><span>الخريج لديه portfolio يثبت كفاءته</span></div>
+        <div class="ps-item"><span class="ps-icon">🦋</span><span>يناسب أنماط التعلم المختلفة والمواهب المتنوعة</span></div>
+        <div class="ps-item"><span class="ps-icon">🌐</span><span>جواز سفر تعليمي لأكثر من 180 دولة</span></div>
+      </div>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #7c3aed, #4f46e5); border-radius: var(--radius); padding: 2.5rem; color: white; text-align: center; margin-top: 2rem;">
+      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.75rem;">🇯🇴 أردن يستحق تعليماً يناسب المستقبل</h3>
+      <p style="opacity: 0.85; max-width: 550px; margin: 0 auto 1.5rem; line-height: 1.8;">لا يعني هذا إلغاء التعليم التقليدي، بل توفير خيارات متعددة لطلاب متعددي المواهب والاهتمامات.</p>
+      <button class="btn-primary" onclick="showPage('quiz')">اكتشف ما يناسبك ←</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>دليل BTEC الأردن © 2024 — موقع تعليمي توعوي | صُنع بـ <span>❤</span> للطلاب الأردنيين</p>
+</footer>
+
+<script>
+// NAV
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  const labels = { home: 0, specs: 1, pros: 2, quiz: 3, choice: 4, story: 5, compare: 6, campaign: 7 };
+  document.querySelectorAll('.nav-links button')[labels[id]]?.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'quiz') initQuiz();
+}
+
+// QUIZ
+const questions = [
+  {
+    q: 'كيف تفضل تتعلم موضوع جديد؟',
+    opts: ['أجرب وأطبق بنفسي 🔧', 'أقرأ وأحفظ من الكتاب 📖', 'أشاهد فيديوهات وشرح 🎥', 'أتعلم مع مجموعة 👥'],
+    scores: [3, 0, 2, 1]
+  },
+  {
+    q: 'ماذا تفضل في مشاريع المدرسة؟',
+    opts: ['مشاريع جماعية وعمل فريق 🤝', 'بحث فردي وكتابة مقال 📝', 'تصميم وإبداع 🎨', 'عروض تقديمية 🎤'],
+    scores: [2, 0, 3, 2]
+  },
+  {
+    q: 'كيف تشعر تجاه الامتحانات النهائية؟',
+    opts: ['أتوتر كثيراً وأصعب عليي 😰', 'لا أحبها لكن أتعامل معها 😐', 'أحبها وهي تُظهر قدراتي ✅', 'ما فرق معي كثير 🤷'],
+    scores: [3, 2, 0, 1]
+  },
+  {
+    q: 'ما هدفك بعد الثانوية؟',
+    opts: ['العمل مباشرة أو مشروع خاص 🚀', 'جامعة أردنية حكومية 🏛️', 'الدراسة في الخارج ✈️', 'لسا ما قررت 🤔'],
+    scores: [3, 0, 3, 1]
+  },
+  {
+    q: 'ما وصف شخصيتك الأقرب؟',
+    opts: ['مبدع ومحب للتجريب ✨', 'منظم ومحب للهيكل والوضوح 📋', 'اجتماعي وقائد 🌟', 'هادئ وتحليلي 🔍'],
+    scores: [3, 0, 2, 1]
+  }
+];
+
+let currentQ = 0, totalScore = 0, answers = [];
+
+function initQuiz() {
+  currentQ = 0; totalScore = 0; answers = [];
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const progress = ((currentQ + 1) / questions.length) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('quizContent').innerHTML = `
+    <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">سؤال ${currentQ + 1} من ${questions.length}</div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((o, i) => `<button class="quiz-option" onclick="selectOpt(${i})">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-nav">
+      <button onclick="goBack()" style="background: none; border: 1px solid #d1d5db; border-radius: 8px; padding: 0.5rem 1rem; font-family: Cairo, sans-serif; cursor: pointer; color: var(--text-muted);" ${currentQ === 0 ? 'disabled' : ''}>← رجوع</button>
+      <span></span>
+    </div>
+  `;
+}
+
+function selectOpt(i) {
+  document.querySelectorAll('.quiz-option').forEach((b, j) => {
+    b.classList.toggle('selected', j === i);
+  });
+  answers[currentQ] = i;
+  setTimeout(() => {
+    totalScore += questions[currentQ].scores[i];
+    currentQ++;
+    if (currentQ < questions.length) renderQuestion();
+    else showResult();
+  }, 400);
+}
+
+function goBack() {
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+}
+
+function showResult() {
+  let result, badge, desc, cls;
+  if (totalScore >= 11) {
+    result = '🎯 BTEC هو خيارك المثالي!';
+    badge = 'result-btec';
+    desc = 'شخصيتك العملية والإبداعية تتناسب تماماً مع نظام BTEC. ستجد نفسك تتألق في بيئة المشاريع والتعلم التطبيقي. استكشف التخصصات المتاحة واختار ما يناسب شغفك.';
+  } else if (totalScore >= 6) {
+    result = '⚖️ الخياران يناسبانك';
+    badge = 'result-either';
+    desc = 'أنت شخصية متوازنة يمكنها النجاح في كلا النظامين. الأهم أن تحدد هدفك الجامعي والمهني أولاً، ثم تختار النظام الذي يوصلك إليه بشكل أفضل.';
+  } else {
+    result = '📚 التعليم التقليدي يناسبك أكثر';
+    badge = 'result-trad';
+    desc = 'تفضل البنية الواضحة والهيكل المنظم، وهذا يناسب التعليم التقليدي. قد تجد صعوبة في الاستقلالية الكبيرة التي يتطلبها BTEC. لكن هذا لا يمنعك من استكشاف التخصصات المختلفة.';
+  }
+  document.getElementById('quizContent').innerHTML = `
+    <div class="quiz-result">
+      <div class="result-badge ${badge}">${result}</div>
+      <p class="result-desc">${desc}</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-primary" onclick="showPage('specs')">استكشف التخصصات ←</button>
+        <button onclick="initQuiz()" style="background: none; border: 2px solid var(--accent); color: var(--accent); padding: 0.85rem 2rem; border-radius: 50px; font-family: Cairo, sans-serif; font-weight: 700; cursor: pointer;">أعد الاختبار 🔄</button>
+      </div>
+    </div>
+  `;
+}
+
+// CHOICE
+function choiceSelect(type) {
+  const results = {
+    practical: { title: '🎯 BTEC مناسب جداً لك!', desc: 'طبيعتك العملية والتطبيقية هي بالضبط ما يبحث عنه BTEC. ستزدهر في بيئة المشاريع والتعلم الحقيقي.', btn: 'specs', btnText: 'تصفح التخصصات العملية ←' },
+    theoretical: { title: '📚 التعليم التقليدي أو BTEC بتخصصات نظرية', desc: 'محبوك للنظريات لا يمنعك من BTEC، لكن تأكد أن التخصص الذي تختاره يناسب طبيعتك التحليلية.', btn: 'compare', btnText: 'قارن الخيارين ←' },
+    creative: { title: '🎨 BTEC هو ملعبك!', desc: 'تخصصات الإبداع في BTEC — تصميم، إعلام، فنون — مصممة لأشخاص مثلك. ستجد بيئة تحتضن إبداعك.', btn: 'specs', btnText: 'اكتشف تخصصات الإبداع ←' },
+    social: { title: '🌟 BTEC يطلق قدراتك القيادية', desc: 'العمل الجماعي في BTEC سيجعلك في عنصرك. تخصصات إدارة الأعمال والإعلام ستناسبك كثيراً.', btn: 'specs', btnText: 'تصفح تخصصات القيادة ←' }
+  };
+  const r = results[type];
+  document.getElementById('choiceResult').style.display = 'block';
+  document.getElementById('choiceResult').innerHTML = `
+    <div style="background: rgba(255,255,255,0.12); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); padding: 2rem; text-align: center;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.75rem;">${r.title}</h3>
+      <p style="opacity: 0.85; line-height: 1.8; max-width: 450px; margin: 0 auto 1.5rem;">${r.desc}</p>
+      <button class="btn-primary" onclick="showPage('${r.btn}')">${r.btnText}</button>
+    </div>
+  `;
+  document.getElementById('choiceResult').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Init
+initQuiz();
+</script>
+</body>
+</html>
